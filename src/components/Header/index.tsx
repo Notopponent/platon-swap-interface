@@ -138,8 +138,8 @@ const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
 
-  console.log('==============  useActiveWeb3React ==============');
-  console.log(useActiveWeb3React());
+  // console.log('==============  useActiveWeb3React ==============');
+  // console.log(useActiveWeb3React());
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const [isDark] = useDarkModeManager()

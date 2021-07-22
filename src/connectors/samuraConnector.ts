@@ -2,6 +2,7 @@ import { AbstractConnectorArguments, ConnectorUpdate } from '@web3-react/types'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import warning from 'tiny-warning'
 import { SendReturnResult , SendReturn, Send, SendOld} from './types'
+var Web3 = require('web3');
 
 const __DEV__ = false;
 
@@ -89,6 +90,7 @@ export class SamuraConnector extends AbstractConnector {
       account = await (window.platon.send as Send)('platon_requestAccounts').then(
         sendReturn => parseSendReturn(sendReturn)[0]
       )
+      account = Web3.utils.decodeBech32Address(account);
     } catch (error) {
       if ((error as any).code === 4001) {
         throw new UserRejectedRequestError()
@@ -100,8 +102,11 @@ export class SamuraConnector extends AbstractConnector {
     if (!account) {
       // if enable is successful but doesn't return accounts, fall back to getAccount (not happy i have to do this...)
       account = await window.platon.enable().then(sendReturn => sendReturn && parseSendReturn(sendReturn)[0])
+      account = Web3.utils.decodeBech32Address(account);
     }
 
+    console.log('========= activate ======');
+    console.log(account)
     return { provider: window.platon, ...(account ? { account } : {}) }
   }
 
@@ -161,6 +166,7 @@ export class SamuraConnector extends AbstractConnector {
     let account
     try {
       account = await (window.platon.send as Send)('platon_accounts').then(sendReturn => parseSendReturn(sendReturn)[0])
+      account = Web3.utils.decodeBech32Address(account);
     } catch {
       warning(false, 'platon_accounts was unsuccessful, falling back to enable')
     }
@@ -168,6 +174,7 @@ export class SamuraConnector extends AbstractConnector {
     if (!account) {
       try {
         account = await window.platon.enable().then(sendReturn => parseSendReturn(sendReturn)[0])
+        account = Web3.utils.decodeBech32Address(account);
       } catch {
         warning(false, 'enable was unsuccessful, falling back to platon_accounts v2')
       }
@@ -175,8 +182,11 @@ export class SamuraConnector extends AbstractConnector {
 
     if (!account) {
       account = parseSendReturn((window.platon.send as SendOld)({ method: 'platon_accounts' }))[0]
+      account = Web3.utils.decodeBech32Address(account);
     }
 
+    console.log('========= getAccount ======');
+    console.log(account)
     return account
   }
 
