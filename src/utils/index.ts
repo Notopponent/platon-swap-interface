@@ -11,8 +11,6 @@ import { TokenAddressMap } from '../state/lists/hooks'
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
   try {
-    // console.log('================== isAddress ==============');
-    // console.log(value);
     return getAddress(value)
   } catch {
     return false
@@ -25,7 +23,10 @@ const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
   4: 'rinkeby.etherscan.io',
   5: 'goerli.etherscan.io',
   42: 'kovan.etherscan.io',
-  210309: 'devnetscan.platon.network'   // 修改5 新增链的浏览器地址
+  100: 'devnetscan.platon.network',     // 修改5 新增链的浏览器地址
+  210309: 'devnetscan.platon.network',  // 修改5 新增链的浏览器地址
+  201018: 'devnetscan.alaya.network ',  // 修改5 新增链的浏览器地址
+  201030: 'devnetscan.alaya.network',  // 修改5 新增链的浏览器地址
 }
 
 export function getEtherscanLink(chainId: ChainId, data: string, type: 'transaction' | 'token' | 'address'): string {

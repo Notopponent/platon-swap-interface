@@ -7,10 +7,12 @@ var Web3 = require('web3');
 const __DEV__ = false;
 
 function parseSendReturn(sendReturn: SendReturnResult | SendReturn): any {
+  console.log(" =======> sendReturn <========");
+  console.log(sendReturn);
   return sendReturn.hasOwnProperty('result') ? sendReturn.result : sendReturn
 }
 
-export class NoplatonProviderError extends Error {
+export class NoPlatonProviderError extends Error {
   public constructor() {
     super()
     this.name = this.constructor.name
@@ -26,7 +28,7 @@ export class UserRejectedRequestError extends Error {
   }
 }
 
-export class SamuraConnector extends AbstractConnector {
+export class SamuraiConnector extends AbstractConnector {
   constructor(kwargs: AbstractConnectorArguments) {
     super(kwargs)
 
@@ -40,6 +42,8 @@ export class SamuraConnector extends AbstractConnector {
     if (__DEV__) {
       console.log("Handling 'chainChanged' event with payload", chainId)
     }
+    //
+    if (chainId === "0xNaN") return;
     this.emitUpdate({ chainId, provider: window.platon })
   }
 
@@ -70,7 +74,7 @@ export class SamuraConnector extends AbstractConnector {
 
   public async activate(): Promise<ConnectorUpdate> {
     if (!window.platon) {
-      throw new NoplatonProviderError()
+      throw new NoPlatonProviderError()
     }
 
     if (window.platon.on) {
@@ -116,13 +120,12 @@ export class SamuraConnector extends AbstractConnector {
 
   public async getChainId(): Promise<number | string> {
     if (!window.platon) {
-      throw new NoplatonProviderError()
+      throw new NoPlatonProviderError()
     }
 
     let chainId
     try {
-      // chainId = await (window.platon.send as Send)('platon_chainId').then(parseSendReturn)
-      chainId = "0x33585"
+      chainId = await (window.platon.send as Send)('platon_chainId').then(parseSendReturn)
     } catch {
       warning(false, 'platon_chainId was unsuccessful, falling back to net_version')
     }
@@ -160,7 +163,7 @@ export class SamuraConnector extends AbstractConnector {
 
   public async getAccount(): Promise<null | string> {
     if (!window.platon) {
-      throw new NoplatonProviderError()
+      throw new NoPlatonProviderError()
     }
 
     let account

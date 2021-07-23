@@ -1,7 +1,7 @@
 import { ChainId, JSBI, Percent, Token, WETH } from 'platondevswap-sdk'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 
-import { fortmatic, injected, portis, samuraInjected, walletconnect, walletlink } from '../connectors'
+import { fortmatic, injected, portis, samuraiInjected, walletconnect, walletlink } from '../connectors'
 
 export const ROUTER_ADDRESS = '0xe63a6322f82f54397b996d1e1dd2d7834428b724' // 修改2 '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
 
@@ -23,7 +23,10 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.RINKEBY]: [WETH[ChainId.RINKEBY]],
   [ChainId.GÖRLI]: [WETH[ChainId.GÖRLI]],
   [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
+  [ChainId.PLATON]: [WETH[ChainId.PLATON]],
   [ChainId.PLATONDEV]: [WETH[ChainId.PLATONDEV]],
+  [ChainId.ALAYA]:[WETH[ChainId.ALAYA]],
+  [ChainId.ALAYADEV]: [WETH[ChainId.ALAYADEV]],
 }
 
 // used to construct intermediary pairs for trading
@@ -88,7 +91,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     primary: true
   },
   Samurai: {
-    connector: samuraInjected,
+    connector: samuraiInjected,
     name: 'Samurai',
     iconName: 'samurai.svg',
     description: 'Samurai web3 provider.',

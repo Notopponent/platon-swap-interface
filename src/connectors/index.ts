@@ -6,7 +6,7 @@ import { PortisConnector } from '@web3-react/portis-connector'
 
 import { FortmaticConnector } from './Fortmatic'
 import { NetworkConnector } from './NetworkConnector'
-import { SamuraConnector } from './samuraConnector'
+import { SamuraiConnector } from './samuraiConnector'
 
 const NETWORK_URL = process.env.REACT_APP_NETWORK_URL
 const FORMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
@@ -27,8 +27,8 @@ export function getNetworkLibrary(): Web3Provider {
   return (networkLibrary = networkLibrary ?? new Web3Provider(network.provider as any))
 }
 
-export const samuraInjected = new SamuraConnector({
-  supportedChainIds: [1, 3, 4, 5, 42, 210309] // 修改3 新增部署链的id
+export const samuraiInjected = new SamuraiConnector({
+  supportedChainIds: [1, 3, 4, 5, 42, 100, 210309, 201018, 201030] // 修改3 新增部署链的id
 })
 
 export const injected = new InjectedConnector({

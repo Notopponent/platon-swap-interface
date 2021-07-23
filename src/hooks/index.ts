@@ -4,7 +4,7 @@ import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 import { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import { injected } from '../connectors'
+import { samuraiInjected } from '../connectors'
 import { NetworkContextName } from '../constants'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chainId?: ChainId } {
@@ -18,14 +18,14 @@ export function useEagerConnect() {
   const [tried, setTried] = useState(false)
 
   useEffect(() => {
-    injected.isAuthorized().then(isAuthorized => {
+    samuraiInjected.isAuthorized().then(isAuthorized => {
       if (isAuthorized) {
-        activate(injected, undefined, true).catch(() => {
+        activate(samuraiInjected, undefined, true).catch(() => {
           setTried(true)
         })
       } else {
-        if (isMobile && window.ethereum) {
-          activate(injected, undefined, true).catch(() => {
+        if (isMobile && window.platon) {
+          activate(samuraiInjected, undefined, true).catch(() => {
             setTried(true)
           })
         } else {
@@ -53,12 +53,12 @@ export function useInactiveListener(suppress = false) {
   const { active, error, activate } = useWeb3ReactCore() // specifically using useWeb3React because of what this hook does
 
   useEffect(() => {
-    const { ethereum } = window
+    const { platon } = window
 
-    if (ethereum && ethereum.on && !active && !error && !suppress) {
+    if (platon && platon.on && !active && !error && !suppress) {
       const handleChainChanged = () => {
         // eat errors
-        activate(injected, undefined, true).catch(error => {
+        activate(samuraiInjected, undefined, true).catch(error => {
           console.error('Failed to activate after chain changed', error)
         })
       }
@@ -66,19 +66,19 @@ export function useInactiveListener(suppress = false) {
       const handleAccountsChanged = (accounts: string[]) => {
         if (accounts.length > 0) {
           // eat errors
-          activate(injected, undefined, true).catch(error => {
+          activate(samuraiInjected, undefined, true).catch(error => {
             console.error('Failed to activate after accounts changed', error)
           })
         }
       }
 
-      ethereum.on('chainChanged', handleChainChanged)
-      ethereum.on('accountsChanged', handleAccountsChanged)
+      platon.on('chainChanged', handleChainChanged)
+      platon.on('accountsChanged', handleAccountsChanged)
 
       return () => {
-        if (ethereum.removeListener) {
-          ethereum.removeListener('chainChanged', handleChainChanged)
-          ethereum.removeListener('accountsChanged', handleAccountsChanged)
+        if (platon.removeListener) {
+          platon.removeListener('chainChanged', handleChainChanged)
+          platon.removeListener('accountsChanged', handleAccountsChanged)
         }
       }
     }

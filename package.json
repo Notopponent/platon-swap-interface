@@ -106,7 +106,7 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "platondevswap-sdk": "^1.0.6",
+    "platondevswap-sdk": "^1.0.9",
     "web3": "github:PlatONnetwork/client-sdk-js#0.15.1-develop"
   }
 }
