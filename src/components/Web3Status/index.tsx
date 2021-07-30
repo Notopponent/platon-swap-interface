@@ -180,9 +180,6 @@ function Web3StatusInner() {
   const hasSocks = useHasSocks()
   const toggleWalletModal = useWalletModalToggle()
 
-  // console.log('----------- connector --------');
-  // console.log(connector);
-
   if (account) {
     return (
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal} pending={hasPendingTransactions}>

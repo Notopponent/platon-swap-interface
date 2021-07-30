@@ -132,18 +132,14 @@ const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
   [ChainId.ROPSTEN]: 'Ropsten',
   [ChainId.GÖRLI]: 'Görli',
   [ChainId.KOVAN]: 'Kovan',
-  [ChainId.PLATON]: 'PlatOn',
-  [ChainId.PLATONDEV]: 'PlatOnDev',
+  [ChainId.PLATON]: 'Platon',
+  [ChainId.PLATONDEV]: 'Platon-Dev',
   [ChainId.ALAYA]: 'Alaya',
-  [ChainId.ALAYADEV]: 'AlayaDev',
+  [ChainId.ALAYADEV]: 'Alaya-Dev',
 }
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-
-  // console.log('==============  useActiveWeb3React ==============');
-  // console.log(useActiveWeb3React());
-
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const [isDark] = useDarkModeManager()
 

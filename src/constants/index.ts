@@ -90,7 +90,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     color: '#010101',
     primary: true
   },
-  Samurai: {
+  SAMURAI: {
     connector: samuraiInjected,
     name: 'Samurai',
     iconName: 'samurai.svg',

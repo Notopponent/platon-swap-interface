@@ -26,7 +26,7 @@ const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
   100: 'devnetscan.platon.network',     // 修改5 新增链的浏览器地址
   210309: 'devnetscan.platon.network',  // 修改5 新增链的浏览器地址
   201018: 'devnetscan.alaya.network ',  // 修改5 新增链的浏览器地址
-  201030: 'devnetscan.alaya.network',  // 修改5 新增链的浏览器地址
+  201030: 'devnetscan.alaya.network',   // 修改5 新增链的浏览器地址
 }
 
 export function getEtherscanLink(chainId: ChainId, data: string, type: 'transaction' | 'token' | 'address'): string {
@@ -41,7 +41,8 @@ export function getEtherscanLink(chainId: ChainId, data: string, type: 'transact
     }
     case 'address':
     default: {
-      return `${prefix}/address/${data}`
+      // return `${prefix}/address/${data}`
+      return `${prefix}/address-detail?address=${data}`
     }
   }
 }
